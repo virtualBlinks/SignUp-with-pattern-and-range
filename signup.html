@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SignUp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="container">
+        <div class="p-5, w-25 mx-auto card shadow-lg mt-10">
+            <form action="" class="p-5" >
+             <div id="form-group">
+                <label for="">Phone</label>
+                <input type="text" id="phoneInput" class="form-control" name="phone">
+                <small class="text-danger" id="phoneError"></small>
+            </div>
+            <div id="form-group">
+                <label for="">Email</label>
+                <input type="text" id="emailInput" class="form-control" name="email">
+                <small class="text-danger" id="emailError"></small>
+            </div>
+            <div id="form-group">
+                <label for="">Password</label>
+                <input type="text" id="passwordInput" class="form-control" name="password">
+                <small class="text-danger" id="passwordError"></small>
+            </div>
+            <div id="form-group">
+                <label for="">Confirm Password</label>
+                <input type="text" id="confirmPasswordInput" class="form-control" name="confirmPassword">
+                <small  class="text-danger" id="confirmPasswordError"></small>
+            </div>
+
+            <button id="btn" type="button" class="btn btn-success d-block mx-auto col-8 mt-5" >Submit</button>
+          <p class="text-success mx-auto d-block col-8 mt-5" id="show"></p>
+          </form>
+        </div>
+    </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
+<script>
+    let patterns = {
+        emailInput: /^\w+[@]{1}[a-zA-Z]+[.]{1}[a-zA-Z]+$/,
+        phoneInput: /^[0]{1}[7-9]{1}[0-1]{1}[0-9]{8}$/,
+        passwordInput: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#_])[A-Za-z0-9@#]{8,}$/
+    };
+
+    let inputs = document.querySelectorAll("input");
+    inputs.forEach((el) => el.addEventListener("input", function (event) {
+        let element = event.target;
+        let pattern = patterns[element.id];
+        if (!pattern.test(element.value)) {
+            document.querySelector(`#${element.name}Error`).innerHTML = `Invalid ${element.name}`;
+        } else {
+            document.querySelector(`#${element.name}Error`).innerHTML = "";
+        }
+    }));
+
+    document.getElementById('btn').addEventListener('click', function () {
+        let confirmPasswordInput = document.getElementById('confirmPasswordInput');
+        let passwordInput = document.getElementById('passwordInput');
+        if (confirmPasswordInput.value !== passwordInput.value) {
+            document.getElementById('confirmPasswordError').innerHTML = 'Passwords do not match';
+        } else {
+            document.getElementById('confirmPasswordError').innerHTML = '';
+            document.getElementById("show").innerHTML = 'Sign Up successful';
+            localStorage.setItem('inputs', JSON.stringify(emailInput.value))
+            localStorage.setItem('phone',  JSON.stringify(phoneInput.value))
+            localStorage.setItem('password', JSON.stringify(passwordInput.value))
+        }
+    });
+   
+</script>
